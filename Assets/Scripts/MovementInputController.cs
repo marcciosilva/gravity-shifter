@@ -21,14 +21,14 @@ public class MovementInputController : MonoBehaviour
     public float jumpSpeed = 20f;
     private bool _onAir = false;
 
-    // Use this for initialization
+    // Use this for initialization.
     void Start()
     {
         _physicsBody = GetComponent<Rigidbody2D>();
         _physicsBody.freezeRotation = !rotationEnabled;
     }
 
-    // Update is called once per frame
+    // Update is called once per frame.
     void Update()
     {
         
@@ -39,7 +39,9 @@ public class MovementInputController : MonoBehaviour
         if (horizontalMovementEnabled) CheckHorizontalMovement();
         if (jumpEnabled && Input.GetButtonDown("Jump") && !_onAir)
         {
-            _physicsBody.AddForce(Vector3.up * jumpSpeed);
+            // Multiply by transform.localScale.y's sign to take into account jumping under
+            // different gravity scales.
+            _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
             _onAir = true;
         }
     }

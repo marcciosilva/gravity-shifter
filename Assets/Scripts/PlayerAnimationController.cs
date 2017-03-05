@@ -57,10 +57,12 @@ public class PlayerAnimationController : MonoBehaviour
         // Update sprite according to current gravity scale.
         if (_physicsBody.gravityScale >= 0.0f)
         {
-            _spriteRenderer.flipY = false;
+            //_spriteRenderer.flipY = false;
+            this.transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
         } else
         {
-            _spriteRenderer.flipY = true;
+            //_spriteRenderer.flipY = true;
+            this.transform.localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);
         }
 
     }
