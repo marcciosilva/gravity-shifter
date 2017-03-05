@@ -19,7 +19,7 @@ public class MovementInputController : MonoBehaviour
     public bool jumpEnabled = true;
     public bool rotationEnabled = false;
     public float jumpSpeed = 20f;
-    private bool _jumping = false;
+    private bool _onAir = false;
 
     // Use this for initialization
     void Start()
@@ -37,17 +37,23 @@ public class MovementInputController : MonoBehaviour
     private void FixedUpdate()
     {
         if (horizontalMovementEnabled) CheckHorizontalMovement();
-        if (jumpEnabled && Input.GetButtonDown("Jump") && !_jumping)
+        if (jumpEnabled && Input.GetButtonDown("Jump") && !_onAir)
         {
             _physicsBody.AddForce(Vector3.up * jumpSpeed);
-            _jumping = true;
+            _onAir = true;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Used for foot sensor and jumping.
-        _jumping = false;
+        _onAir = false;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        // Used for foot sensor and jumping.
+        _onAir = true;
     }
 
     private void CheckHorizontalMovement()

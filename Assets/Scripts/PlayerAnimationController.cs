@@ -53,5 +53,15 @@ public class PlayerAnimationController : MonoBehaviour
         {
             _animator.SetBool("Floating", false);
         }
+
+        // Update sprite according to current gravity scale.
+        if (_physicsBody.gravityScale >= 0.0f)
+        {
+            _spriteRenderer.flipY = false;
+        } else
+        {
+            _spriteRenderer.flipY = true;
+        }
+
     }
 }

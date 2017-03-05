@@ -14,7 +14,7 @@ public class GravityShifter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Jump") || Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Invert Gravity") || Input.GetMouseButtonDown(0))
         {
             // Invert game object's gravity scale.
             _physicsBody.gravityScale *= -1.0f;
