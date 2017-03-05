@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#undef DEBUG
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,21 +27,27 @@ public class PlayerAnimationController : MonoBehaviour
     {
         if (_physicsBody.velocity.x > horizontalVelocityThreshold)
         {
+#if (DEBUG)
             Debug.Log("Running-Right");
+#endif
             _animator.SetBool("Running-Right", true);
             _spriteRenderer.flipX = false;
             _animator.SetBool("Running-Left", false);
         }
         else if (_physicsBody.velocity.x < -horizontalVelocityThreshold)
         {
+#if (DEBUG)
             Debug.Log("Running-Left");
+#endif
             _spriteRenderer.flipX = true;
             _animator.SetBool("Running-Left", true);
             _animator.SetBool("Running-Right", false);
         }
         else
         {
+#if (DEBUG)
             Debug.Log("Not running");
+#endif
             _animator.SetBool("Running-Right", false);
             _animator.SetBool("Running-Left", false);
         }

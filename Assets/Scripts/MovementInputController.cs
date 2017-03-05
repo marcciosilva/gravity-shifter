@@ -1,4 +1,5 @@
-﻿using System;
+﻿#define JUMP_ENABLED
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,10 +17,10 @@ public class MovementInputController : MonoBehaviour
     public float maxSpeed;
     public bool horizontalMovementEnabled = true;
     public bool autoHorizontalMovement = false;
-    public bool jumpEnabled = true;
     public bool rotationEnabled = false;
     public float jumpSpeed = 20f;
-    private bool _onAir = false;
+    private bool _onAir;
+    private bool _shouldJump = false;
 
     // Use this for initialization.
     void Start()
@@ -31,19 +32,26 @@ public class MovementInputController : MonoBehaviour
     // Update is called once per frame.
     void Update()
     {
-        
+#if (JUMP_ENABLED)
+        if (Input.GetButtonDown("Jump") && !_onAir)
+        {
+            _shouldJump = true;
+            Debug.Log("Should jump");
+        }
+#endif
     }
 
     private void FixedUpdate()
     {
-        if (horizontalMovementEnabled) CheckHorizontalMovement();
-        if (jumpEnabled && Input.GetButtonDown("Jump") && !_onAir)
+        if (_shouldJump)
         {
             // Multiply by transform.localScale.y's sign to take into account jumping under
             // different gravity scales.
             _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
-            _onAir = true;
+            _shouldJump = false;
+            Debug.Log("Should not jump");
         }
+        if (horizontalMovementEnabled) CheckHorizontalMovement();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

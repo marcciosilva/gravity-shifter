@@ -8,7 +8,6 @@ public class CameraFollow : MonoBehaviour
 
     private Transform _playerTransform;
     private string _playerTag = "Player";
-    public Vector3 cameraOffset = new Vector3();
     Camera _cam;
     public float scaleFactor;
 
@@ -26,12 +25,18 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _cam.orthographicSize = (Screen.height / 100f) / scaleFactor;
+        //_cam.orthographicSize = (Screen.height / 100f) / scaleFactor;
+        Camera.main.orthographicSize = Screen.height / 32.0f / 2.0f;
         if (_playerTransform != null)
         {
             Vector3 playerPosition = _playerTransform.position;
             // TODO limit x position
-            this.transform.position = new Vector3(playerPosition.x, playerPosition.y, this.transform.position.z) + cameraOffset;
+            transform.position = new Vector3(playerPosition.x, playerPosition.y, this.transform.position.z);
+            //this.transform.position = Vector3.Lerp(transform.position, new Vector3(playerPosition.x, playerPosition.y, this.transform.position.z), 0.5f);
+
+
+
+
         }
     }
 
