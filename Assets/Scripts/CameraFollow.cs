@@ -9,13 +9,12 @@ public class CameraFollow : MonoBehaviour
     private Transform _playerTransform;
     private string _playerTag = "Player";
     Camera _cam;
-    public float scaleFactor;
-    // Boundaries for camera following.
-    Transform upperBoundary;
-    Transform rightBoundary;
-    Transform leftBoundary;
-    Transform lowerBoundary;
+    // Camera limits
+    Vector4 camLimits; // minX, maxX, minY, maxY.
 
+
+    const int PIXELS_PER_UNIT = 32;
+    public float camLerp = 4.0f;
     float halfScreenWidth;
     float halfScreenHeight;
 
@@ -23,8 +22,9 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         // TODO update when screen size is changed?
-        halfScreenWidth = Screen.width / 2.0f;
-        halfScreenHeight = Screen.height / 2.0f;
+        camLimits = new Vector4();
+        halfScreenWidth = Screen.width / 2.0f / PIXELS_PER_UNIT;
+        halfScreenHeight = Screen.height / 2.0f / PIXELS_PER_UNIT;
         // Get boundary information.
         GameObject tmpGameObject;
 
@@ -35,22 +35,23 @@ public class CameraFollow : MonoBehaviour
             {
                 if (boundaryString.Equals(boundaryStrings[0]))
                 {
-                    upperBoundary = tmpGameObject.GetComponent<Transform>();
+                    // maxY.
+                    camLimits.w = tmpGameObject.GetComponent<Transform>().position.y - halfScreenHeight;
                 } else if (boundaryString.Equals(boundaryStrings[1]))
                 {
-                    rightBoundary = tmpGameObject.GetComponent<Transform>();
+                    // maxX.
+                    camLimits.y = tmpGameObject.GetComponent<Transform>().position.x - halfScreenWidth;
                 } else if (boundaryString.Equals(boundaryStrings[2]))
                 {
-                    leftBoundary = tmpGameObject.GetComponent<Transform>();
+                    // minX.
+                    camLimits.x = tmpGameObject.GetComponent<Transform>().position.x + halfScreenWidth;
                 } else if (boundaryString.Equals(boundaryStrings[3]))
                 {
-                    lowerBoundary = tmpGameObject.GetComponent<Transform>();
+                    // minY.
+                    camLimits.z = tmpGameObject.GetComponent<Transform>().position.y + halfScreenHeight;
                 }
             }
         }
-
-
-        
         _cam = GetComponent<Camera>();
         GameObject player = GameObject.FindGameObjectWithTag(_playerTag);
         if (player != null)
@@ -62,20 +63,18 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame.
     void Update()
     {
-        //_cam.orthographicSize = (Screen.height / 100f) / scaleFactor;
-        Camera.main.orthographicSize = Screen.height / 32.0f / 2.0f;
+        _cam.orthographicSize = Screen.height / 32.0f / 2.0f;
+    }
+
+    private void LateUpdate()
+    {
         if (_playerTransform != null)
         {
             Vector3 playerPosition = _playerTransform.position;
-            // TODO limit x position.
-            Vector3 newCamPosition = new Vector3(playerPosition.x, playerPosition.y, this.transform.position.z);
-            if ((leftBoundary != null && newCamPosition.x - halfScreenWidth <= leftBoundary.position.x)
-                || (rightBoundary != null && newCamPosition.x + halfScreenWidth >= rightBoundary.position.x))
-            {
-                newCamPosition.x = transform.position.x; // Remains unchanged.
-            }
-            transform.position = newCamPosition;
-            //this.transform.position = Vector3.Lerp(transform.position, new Vector3(playerPosition.x, playerPosition.y, this.transform.position.z), 0.5f);
+            transform.position = Vector3.Lerp(
+                transform.position,
+                new Vector3(Mathf.Clamp(playerPosition.x, camLimits.x, camLimits.y), Mathf.Clamp(playerPosition.y, camLimits.z, camLimits.w), this.transform.position.z),
+                Time.deltaTime * camLerp);
         }
     }
 
