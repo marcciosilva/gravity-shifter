@@ -1,4 +1,5 @@
 ﻿#define JUMP_ENABLED
+#define DEBUG
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +37,9 @@ public class MovementInputController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && !_onAir)
         {
             _shouldJump = true;
+#if (DEBUG)
             Debug.Log("Should jump");
+#endif
         }
 #endif
     }
@@ -49,7 +52,9 @@ public class MovementInputController : MonoBehaviour
             // different gravity scales.
             _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
             _shouldJump = false;
+#if (DEBUG)
             Debug.Log("Should not jump");
+#endif
         }
         if (horizontalMovementEnabled) CheckHorizontalMovement();
     }
