@@ -22,6 +22,7 @@ public class MovementInputController : MonoBehaviour
     public float jumpSpeed = 20f;
     private bool _onAir;
     private bool _shouldJump = false;
+    public bool isJumping = false;
 
     // Use this for initialization.
     void Start()
@@ -51,6 +52,7 @@ public class MovementInputController : MonoBehaviour
             // Multiply by transform.localScale.y's sign to take into account jumping under
             // different gravity scales.
             _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
+            isJumping = true;
             _shouldJump = false;
 #if (DEBUG)
             Debug.Log("Should not jump");
@@ -63,6 +65,7 @@ public class MovementInputController : MonoBehaviour
     {
         // Used for foot sensor and jumping.
         _onAir = false;
+        isJumping = false;
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -13,6 +13,9 @@ public class PlayerAnimationController : MonoBehaviour
     private Animator _animator;
     private Rigidbody2D _physicsBody;
     private SpriteRenderer _spriteRenderer;
+    // TODO clean this shit up.
+    private MovementInputController _inputController;
+    private int jumpState = Animator.StringToHash("Jumping");
 
     // Use this for initialization
     void Start()
@@ -20,6 +23,8 @@ public class PlayerAnimationController : MonoBehaviour
         _animator = GetComponent<Animator>();
         _physicsBody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _inputController = GetComponent<MovementInputController>();
+
     }
 
     // Update is called once per frame
@@ -52,14 +57,21 @@ public class PlayerAnimationController : MonoBehaviour
             _animator.SetBool("Running-Left", false);
         }
 
-        if (Mathf.Abs(_physicsBody.velocity.y) > verticalVelocityThreshold)
+        if (_animator.GetBool("Jumping")) _animator.SetBool("Jumping", false);
+
+        if (_inputController.isJumping)
         {
-            _animator.SetBool("Floating", true);
+            _animator.SetBool("Jumping", true);
         }
-        else
-        {
-            _animator.SetBool("Floating", false);
-        }
+
+        //if (Mathf.Abs(_physicsBody.velocity.y) > verticalVelocityThreshold)
+        //{
+        //    _animator.SetBool("Floating", true);
+        //}
+        //else
+        //{
+        //    _animator.SetBool("Floating", false);
+        //}
 
         // Update sprite according to current gravity scale.
         if (_physicsBody.gravityScale >= 0.0f)
