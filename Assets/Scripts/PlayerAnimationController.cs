@@ -57,11 +57,11 @@ public class PlayerAnimationController : MonoBehaviour
             _animator.SetBool("Running-Left", false);
         }
 
-        if (_animator.GetBool("Jumping")) _animator.SetBool("Jumping", false);
+        if (_animator.GetBool("OnAir")) _animator.SetBool("OnAir", false);
 
-        if (_inputController.isJumping)
+        if (_inputController.onAir)
         {
-            _animator.SetBool("Jumping", true);
+            _animator.SetBool("OnAir", true);
         }
 
         //if (Mathf.Abs(_physicsBody.velocity.y) > verticalVelocityThreshold)

@@ -1,24 +1,12 @@
 fileFormatVersion: 2
-guid: b4498ecbd7f4f1b42bf1be683e4703ee
-timeCreated: 1489543274
+guid: f92520f016953da4d806d951e0c68c49
+timeCreated: 1489543448
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: main-jumping_0
-    21300002: main-jumping_1
-    21300004: main-jumping_2
-    21300006: main-jumping_3
-    21300008: main-jumping_4
-    21300010: main-jumping_5
-    21300012: main-jumping_6
-    21300014: main-jumping_7
-    21300016: main-jumping_8
-    21300018: main-jumping_9
-    21300020: main-jumping_10
-    21300022: main-jumping_11
-    21300024: main-jumping_12
-    21300026: main-jumping_13
-    21300028: main-jumping_14
+    21300000: main-start-jump_0
+    21300002: main-start-jump_1
+    21300004: main-start-jump_2
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -49,7 +37,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -101,7 +89,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main-jumping_0
+      name: main-start-jump_0
       rect:
         serializedVersion: 2
         x: 0
@@ -114,10 +102,23 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: main-jumping_1
+      name: main-start-jump_1
       rect:
         serializedVersion: 2
         x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: main-start-jump_2
+      rect:
+        serializedVersion: 2
+        x: 128
         y: 0
         width: 64
         height: 64

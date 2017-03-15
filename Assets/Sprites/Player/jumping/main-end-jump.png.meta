@@ -1,24 +1,11 @@
 fileFormatVersion: 2
-guid: b4498ecbd7f4f1b42bf1be683e4703ee
-timeCreated: 1489543274
+guid: 8f1b7d5ef05f3f041905ad151872ed44
+timeCreated: 1489543455
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: main-jumping_0
-    21300002: main-jumping_1
-    21300004: main-jumping_2
-    21300006: main-jumping_3
-    21300008: main-jumping_4
-    21300010: main-jumping_5
-    21300012: main-jumping_6
-    21300014: main-jumping_7
-    21300016: main-jumping_8
-    21300018: main-jumping_9
-    21300020: main-jumping_10
-    21300022: main-jumping_11
-    21300024: main-jumping_12
-    21300026: main-jumping_13
-    21300028: main-jumping_14
+    21300000: main-end-jump_0
+    21300002: main-end-jump_1
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -101,7 +88,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main-jumping_0
+      name: main-end-jump_0
       rect:
         serializedVersion: 2
         x: 0
@@ -114,7 +101,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: main-jumping_1
+      name: main-end-jump_1
       rect:
         serializedVersion: 2
         x: 64
