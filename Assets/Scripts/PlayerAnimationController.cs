@@ -56,7 +56,7 @@ public class PlayerAnimationController : MonoBehaviour
             _animator.SetBool("Running-Right", false);
             _animator.SetBool("Running-Left", false);
         }
-
+        
         if (_animator.GetBool("OnAir")) _animator.SetBool("OnAir", false);
 
         if (_inputController.onAir)

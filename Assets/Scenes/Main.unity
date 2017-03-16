@@ -19376,7 +19376,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 895248555}
-  m_RootOrder: 18
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &746036826
 SpriteRenderer:
@@ -23936,9 +23936,9 @@ Transform:
   - {fileID: 1227761043}
   - {fileID: 801604563}
   - {fileID: 1547002963}
-  - {fileID: 746036825}
   - {fileID: 1299101032}
   - {fileID: 1938011515}
+  - {fileID: 746036825}
   - {fileID: 909598929}
   - {fileID: 208709113}
   - {fileID: 1757076785}
@@ -46298,6 +46298,12 @@ Prefab:
       propertyPath: m_Mass
       value: 1.2224476
       objectReference: {fileID: 0}
+    - target: {fileID: 114280565121697992, guid: c71bca1951226094ca4d691f8bb08501,
+        type: 2}
+      propertyPath: gravityParticleSystem
+      value: 
+      objectReference: {fileID: 1564874446428510, guid: e28e6853efbcfe1488856ec63c1e89cd,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c71bca1951226094ca4d691f8bb08501, type: 2}
   m_IsPrefabParent: 0

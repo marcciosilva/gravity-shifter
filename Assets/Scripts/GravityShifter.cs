@@ -6,6 +6,8 @@ using UnityEngine;
 public class GravityShifter : MonoBehaviour {
 
     private Rigidbody2D _physicsBody;
+    public GameObject gravityParticleSystem;
+    private GameObject _currentGravityParticleSystem;
 
     // Use this for initialization
     void Start () {
@@ -18,6 +20,10 @@ public class GravityShifter : MonoBehaviour {
         {
             // Invert game object's gravity scale.
             _physicsBody.gravityScale *= -1.0f;
+            if (gravityParticleSystem != null)
+                _currentGravityParticleSystem = Instantiate(gravityParticleSystem, _physicsBody.transform.position, Quaternion.identity);
+                Destroy(_currentGravityParticleSystem, 1);
         }
     }
+
 }
