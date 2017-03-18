@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e8c3b26a54583c4479e4c576235baaf5
+timeCreated: 1489798552
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Percy Pixel
+  fontNames:
+  - Percy Pixel
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
