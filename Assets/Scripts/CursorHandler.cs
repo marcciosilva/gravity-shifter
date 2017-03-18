@@ -10,7 +10,7 @@ public class CursorHandler : MonoBehaviour {
     private int _availablePositions = 2;
     private float _exitTextVertPosition;
     private float _startTextVertPosition;
-    private float _delayBetweenActions = 0.83f; // seconds
+    private float _delayBetweenActions = 0.5f; // seconds
     private float _timeSinceLastAction; // seconds
 
 
@@ -55,13 +55,13 @@ public class CursorHandler : MonoBehaviour {
         _timeSinceLastAction += Time.deltaTime;
         if (Input.GetAxis("Vertical") != 0 && (_timeSinceLastAction > _delayBetweenActions))
         {
-            if (Input.GetAxis("Vertical") < 0)
+            if (Input.GetAxis("Vertical") < -0.5f)
             {
                 _timeSinceLastAction = 0;
                 _currentPosition = Mathf.Abs(_currentPosition + 1) % _availablePositions;
 
             }
-            else if (Input.GetAxis("Vertical") > 0)
+            else if (Input.GetAxis("Vertical") > 0.5f)
             {
                 _timeSinceLastAction = 0;
                 _currentPosition = Mathf.Abs(_currentPosition - 1) % _availablePositions;

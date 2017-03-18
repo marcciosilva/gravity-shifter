@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
     private const string _loseSceneName = "Lose";
-    private float _levelDuration = 30; // seconds
+    private float _levelDuration = 5; // seconds
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;

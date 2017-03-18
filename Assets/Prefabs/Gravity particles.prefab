@@ -1074,7 +1074,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
       minMaxState: 0
-    tilesX: 4
+    tilesX: 3
     tilesY: 1
     animationType: 1
     rowIndex: 0
