@@ -39,7 +39,7 @@ public class CursorHandler : MonoBehaviour {
             switch (_currentPosition)
             {
                 case 0:
-                    SceneManager.LoadScene("Main");
+                    SceneManager.LoadScene("Level-1");
                     break;
                 case 1:
                     Application.Quit();

@@ -67,13 +67,22 @@ public class MovementInputController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Used for foot sensor and jumping.
-        onAir = false;
+        if (collision.name != "Exit door")
+        {
+            onAir = false;
+        } else
+        {
+            _levelManager.reachedExit();
+            this.enabled = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         // Used for foot sensor and jumping.
-        onAir = true;
+        if (collision.name != "Exit door") {
+            onAir = true;
+        }
     }
 
     private void CheckHorizontalMovement()

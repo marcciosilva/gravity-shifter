@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
     private const string _loseSceneName = "Lose";
-    private float _levelDuration = 5; // seconds
+    private float _levelDuration = 999; // seconds
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;
@@ -59,5 +60,10 @@ public class LevelManager : MonoBehaviour {
         }
 
 
+    }
+
+    internal void reachedExit()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

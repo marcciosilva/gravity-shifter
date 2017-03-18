@@ -66,7 +66,7 @@ public class CameraFollow : MonoBehaviour
         _cam.orthographicSize = Screen.height / 32.0f / 2.0f;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (_playerTransform != null)
         {
@@ -76,6 +76,11 @@ public class CameraFollow : MonoBehaviour
                 new Vector3(Mathf.Clamp(playerPosition.x, camLimits.x, camLimits.y), Mathf.Clamp(playerPosition.y, camLimits.z, camLimits.w), this.transform.position.z),
                 Time.deltaTime * camLerp);
         }
+    }
+
+    private void LateUpdate()
+    {
+
     }
 
 }
