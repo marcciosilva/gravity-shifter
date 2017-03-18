@@ -22,41 +22,46 @@ public class MovementInputController : MonoBehaviour
     public float jumpSpeed = 20f;
     public bool onAir;
     private bool _shouldJump = false;
+    private LevelManager _levelManager;
 
     // Use this for initialization.
     void Start()
     {
         _physicsBody = GetComponent<Rigidbody2D>();
         _physicsBody.freezeRotation = !rotationEnabled;
+        _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
     }
 
     // Update is called once per frame.
     void Update()
     {
-#if (JUMP_ENABLED)
-        if (Input.GetButtonDown("Jump") && !onAir)
+        if (!_levelManager.isGamePaused)
         {
-            _shouldJump = true;
+#if (JUMP_ENABLED)
+            if (Input.GetButtonDown("Jump") && !onAir)
+            {
+                _shouldJump = true;
 #if (DEBUG)
-            Debug.Log("Should jump");
+                Debug.Log("Should jump");
+#endif
+            }
 #endif
         }
-#endif
     }
 
     private void FixedUpdate()
     {
-        if (_shouldJump)
-        {
-            // Multiply by transform.localScale.y's sign to take into account jumping under
-            // different gravity scales.
-            _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
-            _shouldJump = false;
+            if (_shouldJump)
+            {
+                // Multiply by transform.localScale.y's sign to take into account jumping under
+                // different gravity scales.
+                _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
+                _shouldJump = false;
 #if (DEBUG)
-            Debug.Log("Should not jump");
+                Debug.Log("Should not jump");
 #endif
-        }
-        if (horizontalMovementEnabled) CheckHorizontalMovement();
+            }
+            if (horizontalMovementEnabled) CheckHorizontalMovement();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

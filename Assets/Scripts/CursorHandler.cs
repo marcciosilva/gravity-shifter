@@ -10,7 +10,7 @@ public class CursorHandler : MonoBehaviour {
     private int _availablePositions = 2;
     private float _exitTextVertPosition;
     private float _startTextVertPosition;
-    private float _delayBetweenActions = 0.5f; // seconds
+    private float _delayBetweenActions = 0.83f; // seconds
     private float _timeSinceLastAction; // seconds
 
 
