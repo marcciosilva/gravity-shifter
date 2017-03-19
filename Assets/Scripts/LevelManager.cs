@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
     private const string _loseSceneName = "Lose";
-    private float _levelDuration = 999; // seconds
+    public int currentLevel = 1;
+    private int maxLevel = 2;
+    private float[] _levelDurations = {10,10}; // seconds
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;
@@ -54,9 +56,9 @@ public class LevelManager : MonoBehaviour {
 
         if (!isGamePaused)
         {
-            _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_levelDuration / 60, (int)_levelDuration % 60);
-            _levelDuration -= Time.deltaTime;
-            if (_levelDuration <= 1) StartCoroutine("LoadScene", _loseSceneName);
+            _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_levelDurations[currentLevel-1] / 60, (int)_levelDurations[currentLevel - 1] % 60);
+            _levelDurations[currentLevel - 1] -= Time.deltaTime;
+            if (_levelDurations[currentLevel - 1] <= 1) StartCoroutine("LoadScene", _loseSceneName);
         }
 
     }
@@ -70,6 +72,14 @@ public class LevelManager : MonoBehaviour {
 
     public void reachedExit()
     {
-        StartCoroutine("LoadScene", "MainMenu");
+        currentLevel++;
+        if (currentLevel <= maxLevel)
+        {
+            StartCoroutine("LoadScene", "Level-" + currentLevel);
+        } else
+        {
+            // TODO implement win screen.
+            StartCoroutine("LoadScene", "MainMenu");
+        }
     }
 }
