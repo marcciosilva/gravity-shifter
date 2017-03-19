@@ -72,8 +72,9 @@ public class MovementInputController : MonoBehaviour
             onAir = false;
         } else
         {
-            _levelManager.reachedExit();
+            // TODO tidy this shit up, appears on two scripts.
             this.enabled = false;
+            _levelManager.reachedExit();
         }
     }
 

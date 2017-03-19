@@ -28,4 +28,13 @@ public class GravityShifter : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name == "Exit door")
+        {
+            // TODO tidy this shit up, appears on two scripts.
+            this.enabled = false;
+        }
+    }
+
 }

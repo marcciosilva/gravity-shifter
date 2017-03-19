@@ -56,14 +56,20 @@ public class LevelManager : MonoBehaviour {
         {
             _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_levelDuration / 60, (int)_levelDuration % 60);
             _levelDuration -= Time.deltaTime;
-            if (_levelDuration <= 1) SceneManager.LoadScene(_loseSceneName);
+            if (_levelDuration <= 1) StartCoroutine("LoadScene", _loseSceneName);
         }
-
 
     }
 
-    internal void reachedExit()
+    IEnumerator LoadScene(string sceneName)
     {
-        SceneManager.LoadScene("MainMenu");
+        float fadeTime = GameObject.Find("_GM").GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void reachedExit()
+    {
+        StartCoroutine("LoadScene", "MainMenu");
     }
 }
