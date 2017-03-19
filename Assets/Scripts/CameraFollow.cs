@@ -11,6 +11,7 @@ public class CameraFollow : MonoBehaviour
     Camera _cam;
     // Camera limits
     Vector4 camLimits; // minX, maxX, minY, maxY.
+    private float _orthographicSize = 360.0f / 32.0f / 2.0f;
 
 
     const int PIXELS_PER_UNIT = 32;
@@ -23,8 +24,8 @@ public class CameraFollow : MonoBehaviour
     {
         // TODO update when screen size is changed?
         camLimits = new Vector4();
-        halfScreenWidth = Screen.width / 2.0f / PIXELS_PER_UNIT;
-        halfScreenHeight = Screen.height / 2.0f / PIXELS_PER_UNIT;
+        halfScreenWidth = 640 / 2.0f / PIXELS_PER_UNIT;
+        halfScreenHeight = 360 / 2.0f / PIXELS_PER_UNIT;
         // Get boundary information.
         GameObject tmpGameObject;
 
@@ -53,6 +54,7 @@ public class CameraFollow : MonoBehaviour
             }
         }
         _cam = GetComponent<Camera>();
+        _cam.orthographicSize = _orthographicSize;
         GameObject player = GameObject.FindGameObjectWithTag(_playerTag);
         if (player != null)
         {
@@ -63,7 +65,10 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame.
     void Update()
     {
-        _cam.orthographicSize = Screen.height / 32.0f / 2.0f;
+        // This causes the world to be always of the same apparent size
+        // Changes in resolution will result in viewing more or less of the same world
+        //_cam.orthographicSize = Screen.height / 32.0f / 2.0f;
+        // I chose to just set the orthographicSize as fixed, and allow 2x and 4x resolutions
     }
 
     private void FixedUpdate()

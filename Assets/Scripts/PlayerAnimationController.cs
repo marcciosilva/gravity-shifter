@@ -64,15 +64,6 @@ public class PlayerAnimationController : MonoBehaviour
             _animator.SetBool("OnAir", true);
         }
 
-        //if (Mathf.Abs(_physicsBody.velocity.y) > verticalVelocityThreshold)
-        //{
-        //    _animator.SetBool("Floating", true);
-        //}
-        //else
-        //{
-        //    _animator.SetBool("Floating", false);
-        //}
-
         // Update sprite according to current gravity scale.
         if (_physicsBody.gravityScale >= 0.0f)
         {
