@@ -16,6 +16,7 @@ public class PlayerAnimationController : MonoBehaviour
     // TODO clean this shit up.
     private MovementInputController _inputController;
     private int jumpState = Animator.StringToHash("Jumping");
+    private LevelManager _levelManager;
 
     // Use this for initialization
     void Start()
@@ -24,6 +25,7 @@ public class PlayerAnimationController : MonoBehaviour
         _physicsBody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _inputController = GetComponent<MovementInputController>();
+        _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
     }
 
@@ -63,6 +65,12 @@ public class PlayerAnimationController : MonoBehaviour
         {
             _animator.SetBool("OnAir", true);
         }
+
+        if (!_levelManager.isPlayerAlive)
+        {
+            _animator.SetBool("Dead", true);
+        }
+
 
         // Update sprite according to current gravity scale.
         if (_physicsBody.gravityScale >= 0.0f)

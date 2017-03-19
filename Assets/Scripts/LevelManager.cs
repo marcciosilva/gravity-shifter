@@ -8,11 +8,12 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour {
     private const string _loseSceneName = "Lose";
     public int currentLevel = 1;
-    private int maxLevel = 2;
-    private float[] _levelDurations = {10,10}; // seconds
+    private int maxLevel = 3;
+    private float[] _levelDurations = {10,10,20}; // seconds
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;
+    public bool isPlayerAlive = true;
 
 	// Use this for initialization
 	void Start () {
@@ -58,7 +59,7 @@ public class LevelManager : MonoBehaviour {
         {
             _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_levelDurations[currentLevel-1] / 60, (int)_levelDurations[currentLevel - 1] % 60);
             _levelDurations[currentLevel - 1] -= Time.deltaTime;
-            if (_levelDurations[currentLevel - 1] <= 1) StartCoroutine("LoadScene", _loseSceneName);
+            if (_levelDurations[currentLevel - 1] <= 1) lostLevel();
         }
 
     }
@@ -66,8 +67,13 @@ public class LevelManager : MonoBehaviour {
     IEnumerator LoadScene(string sceneName)
     {
         float fadeTime = GameObject.Find("_GM").GetComponent<Fading>().BeginFade(1);
-        yield return new WaitForSeconds(fadeTime);
+        yield return new WaitForSeconds(5);
         SceneManager.LoadScene(sceneName);
+    }
+
+    public void lostLevel()
+    {
+        StartCoroutine("LoadScene", _loseSceneName);
     }
 
     public void reachedExit()

@@ -86,6 +86,17 @@ public class MovementInputController : MonoBehaviour
         }
     }
 
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Deathzone")
+        {
+            this.enabled = false;
+            _levelManager.isPlayerAlive = false;
+            _levelManager.lostLevel();
+        }
+    }
+
     private void CheckHorizontalMovement()
     {
         if (!autoHorizontalMovement)
