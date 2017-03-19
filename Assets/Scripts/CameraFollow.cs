@@ -5,56 +5,63 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
 {
-    public static readonly string[] boundaryStrings = { "Upper_boundary", "Right_boundary", "Left_boundary", "Lower_boundary" };
+    /**
+     * Objects with "Boundary" tag should be defined (gotta have Transform component) if the Camera's movement
+     * is meant to be limited.
+     * Camera position is lerped with player position (which is obtained through a search for "Player" tag).
+     * */
+
     private Transform _playerTransform;
     private string _playerTag = "Player";
-    Camera _cam;
+    private string _boundaryTag = "Boundary";
     // Camera limits
-    Vector4 camLimits; // minX, maxX, minY, maxY.
-    private float _orthographicSize = 360.0f / 32.0f / 2.0f;
-
-
-    const int PIXELS_PER_UNIT = 32;
+    private Vector4 camLimits; // minX, maxX, minY, maxY.
+    private const int PIXELS_PER_UNIT = 32;
     public float camLerp = 4.0f;
-    float halfScreenWidth;
-    float halfScreenHeight;
+    private float halfScreenWidth;
+    private float halfScreenHeight;
+    private bool _fixedVirtualResolution = true;
 
     // Use this for initialization.
     void Start()
     {
-        // TODO update when screen size is changed?
-        camLimits = new Vector4();
-        halfScreenWidth = 640 / 2.0f / PIXELS_PER_UNIT;
-        halfScreenHeight = 360 / 2.0f / PIXELS_PER_UNIT;
-        // Get boundary information.
-        GameObject tmpGameObject;
-
-        foreach (string boundaryString in boundaryStrings)
+        if (_fixedVirtualResolution)
         {
-            tmpGameObject = GameObject.Find(boundaryString);
-            if (tmpGameObject != null)
+            halfScreenWidth = 640 / 2.0f / PIXELS_PER_UNIT;
+            halfScreenHeight = 360 / 2.0f / PIXELS_PER_UNIT;
+        } else
+        {
+            halfScreenWidth = Screen.width / 2.0f / PIXELS_PER_UNIT;
+            halfScreenHeight = Screen.height / 2.0f / PIXELS_PER_UNIT;
+        }
+        // Get objects tagged as Boundary, and adjust camera movement
+        // limits to them.
+        GameObject[] boundaries = GameObject.FindGameObjectsWithTag(_boundaryTag);
+        camLimits = new Vector4();
+        camLimits.x = Mathf.Infinity; // minX
+        camLimits.y = -Mathf.Infinity; // maxX
+        camLimits.z = Mathf.Infinity; // minY
+        camLimits.w = -Mathf.Infinity; // maxY
+        foreach (GameObject boundary in boundaries)
+        {
+            if (boundary.transform.position.x < camLimits.x)
             {
-                if (boundaryString.Equals(boundaryStrings[0]))
-                {
-                    // maxY.
-                    camLimits.w = tmpGameObject.GetComponent<Transform>().position.y - halfScreenHeight;
-                } else if (boundaryString.Equals(boundaryStrings[1]))
-                {
-                    // maxX.
-                    camLimits.y = tmpGameObject.GetComponent<Transform>().position.x - halfScreenWidth;
-                } else if (boundaryString.Equals(boundaryStrings[2]))
-                {
-                    // minX.
-                    camLimits.x = tmpGameObject.GetComponent<Transform>().position.x + halfScreenWidth;
-                } else if (boundaryString.Equals(boundaryStrings[3]))
-                {
-                    // minY.
-                    camLimits.z = tmpGameObject.GetComponent<Transform>().position.y + halfScreenHeight;
-                }
+                camLimits.x = boundary.transform.position.x + halfScreenWidth;
+            }
+            if (boundary.transform.position.x > camLimits.y)
+            {
+                camLimits.y = boundary.transform.position.x - halfScreenWidth;
+            }
+            if (boundary.transform.position.y < camLimits.z)
+            {
+                camLimits.z = boundary.transform.position.y + halfScreenHeight;
+            }
+            if (boundary.transform.position.y > camLimits.w)
+            {
+                camLimits.w = boundary.transform.position.y - halfScreenHeight;
             }
         }
-        _cam = GetComponent<Camera>();
-        _cam.orthographicSize = _orthographicSize;
+
         GameObject player = GameObject.FindGameObjectWithTag(_playerTag);
         if (player != null)
         {
@@ -65,27 +72,17 @@ public class CameraFollow : MonoBehaviour
     // Update is called once per frame.
     void Update()
     {
-        // This causes the world to be always of the same apparent size
-        // Changes in resolution will result in viewing more or less of the same world
-        //_cam.orthographicSize = Screen.height / 32.0f / 2.0f;
-        // I chose to just set the orthographicSize as fixed, and allow 2x and 4x resolutions
     }
 
     private void FixedUpdate()
     {
         if (_playerTransform != null)
         {
-            Vector3 playerPosition = _playerTransform.position;
             transform.position = Vector3.Lerp(
                 transform.position,
-                new Vector3(Mathf.Clamp(playerPosition.x, camLimits.x, camLimits.y), Mathf.Clamp(playerPosition.y, camLimits.z, camLimits.w), this.transform.position.z),
+                new Vector3(Mathf.Clamp(_playerTransform.position.x, camLimits.x, camLimits.y), Mathf.Clamp(_playerTransform.position.y, camLimits.z, camLimits.w), this.transform.position.z),
                 Time.deltaTime * camLerp);
         }
-    }
-
-    private void LateUpdate()
-    {
-
     }
 
 }
