@@ -8345,6 +8345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 639718380}
   - component: {fileID: 639718381}
+  - component: {fileID: 639718382}
   m_Layer: 0
   m_Name: or-not-sign
   m_TagString: Untagged
@@ -8400,6 +8401,23 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!95 &639718382
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 639718379}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6b587e369e72a014f8c1b8f7971b4b35, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &639893256
 Prefab:
   m_ObjectHideFlags: 0
@@ -21434,6 +21452,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1630578947}
   - component: {fileID: 1630578948}
+  - component: {fileID: 1630578949}
   m_Layer: 0
   m_Name: fuck-you-sign
   m_TagString: Untagged
@@ -21489,6 +21508,23 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!95 &1630578949
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1630578946}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 35315f7fbfefdcb49820e9f7845e535a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!4 &1630725200 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4965014826634434, guid: a7bd7b44c261b944abf17af22ac6d3bd,
