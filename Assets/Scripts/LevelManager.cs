@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
     private const string _loseSceneName = "Lose";
-    public int currentLevel = 1;
+    public int currentLevel;
     private int maxLevel = 3;
-    private float[] _levelDurations = new float[] {10,10,15}; // seconds
+    private float[] _levelDurations = new float[] {10, 10, 15}; // seconds
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;
@@ -78,14 +78,18 @@ public class LevelManager : MonoBehaviour {
 
     public void reachedExit()
     {
-        currentLevel++;
-        if (currentLevel <= maxLevel)
+        Debug.Log("Current level is " + currentLevel);
+        int nextLevel = currentLevel + 1;
+        if (nextLevel <= maxLevel)
         {
-            StartCoroutine("LoadScene", "Level-" + currentLevel);
+            Debug.Log("Loading level " + nextLevel);
+            StartCoroutine("LoadScene", "Level-" + nextLevel);
+            this.enabled = false;
         } else
         {
             // TODO implement win screen.
             StartCoroutine("LoadScene", "MainMenu");
+            this.enabled = false;
         }
     }
 }
