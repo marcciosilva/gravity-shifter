@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CursorHandler : MonoBehaviour {
+public class CursorHandler : MonoBehaviour
+{
 
     private int _currentPosition = 0;
     private int _availablePositions = 2;
@@ -15,7 +13,8 @@ public class CursorHandler : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         GameObject tmp = GameObject.Find("TextStartGame");
         if (tmp != null)
             _startTextVertPosition = tmp.transform.position.y;
@@ -23,9 +22,10 @@ public class CursorHandler : MonoBehaviour {
         if (tmp != null)
             _exitTextVertPosition = tmp.transform.position.y;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 
         updateCursor();
         checkSelection();

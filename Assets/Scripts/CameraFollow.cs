@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class CameraFollow : MonoBehaviour
@@ -29,7 +27,8 @@ public class CameraFollow : MonoBehaviour
         {
             halfScreenWidth = 640 / 2.0f / PIXELS_PER_UNIT;
             halfScreenHeight = 360 / 2.0f / PIXELS_PER_UNIT;
-        } else
+        }
+        else
         {
             halfScreenWidth = Screen.width / 2.0f / PIXELS_PER_UNIT;
             halfScreenHeight = Screen.height / 2.0f / PIXELS_PER_UNIT;
@@ -61,7 +60,6 @@ public class CameraFollow : MonoBehaviour
                 camLimits.w = boundary.transform.position.y - halfScreenHeight;
             }
         }
-
         GameObject player = GameObject.FindGameObjectWithTag(_playerTag);
         if (player != null)
         {

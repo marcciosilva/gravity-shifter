@@ -1,6 +1,4 @@
 ﻿#undef DEBUG
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -58,7 +56,7 @@ public class PlayerAnimationController : MonoBehaviour
             _animator.SetBool("Running-Right", false);
             _animator.SetBool("Running-Left", false);
         }
-        
+
         if (_animator.GetBool("OnAir")) _animator.SetBool("OnAir", false);
 
         if (_inputController.onAir)
@@ -77,7 +75,8 @@ public class PlayerAnimationController : MonoBehaviour
         {
             //_spriteRenderer.flipY = false;
             this.transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
-        } else
+        }
+        else
         {
             //_spriteRenderer.flipY = true;
             this.transform.localScale = new Vector3(transform.localScale.x, -1, transform.localScale.z);

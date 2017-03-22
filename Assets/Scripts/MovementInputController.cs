@@ -1,8 +1,5 @@
 ﻿#define JUMP_ENABLED
 #define DEBUG
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -51,17 +48,17 @@ public class MovementInputController : MonoBehaviour
 
     private void FixedUpdate()
     {
-            if (_shouldJump)
-            {
-                // Multiply by transform.localScale.y's sign to take into account jumping under
-                // different gravity scales.
-                _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
-                _shouldJump = false;
+        if (_shouldJump)
+        {
+            // Multiply by transform.localScale.y's sign to take into account jumping under
+            // different gravity scales.
+            _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
+            _shouldJump = false;
 #if (DEBUG)
-                Debug.Log("Should not jump");
+            Debug.Log("Should not jump");
 #endif
-            }
-            if (horizontalMovementEnabled) CheckHorizontalMovement();
+        }
+        if (horizontalMovementEnabled) CheckHorizontalMovement();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -70,7 +67,8 @@ public class MovementInputController : MonoBehaviour
         if (collision.name != "Exit door")
         {
             onAir = false;
-        } else
+        }
+        else
         {
             // TODO tidy this shit up, appears on two scripts.
             this.enabled = false;
@@ -81,7 +79,8 @@ public class MovementInputController : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         // Used for foot sensor and jumping.
-        if (collision.name != "Exit door") {
+        if (collision.name != "Exit door")
+        {
             onAir = true;
         }
     }
@@ -113,7 +112,8 @@ public class MovementInputController : MonoBehaviour
                 // Modify component's velocity on x (keeping y).
                 // TODO change this to support vertical movement.
                 _physicsBody.velocity = new Vector2(xVelocity, _physicsBody.velocity.y);
-            } else
+            }
+            else
             {
                 _physicsBody.velocity = new Vector2(_physicsBody.velocity.x / desacceleration, _physicsBody.velocity.y);
             }

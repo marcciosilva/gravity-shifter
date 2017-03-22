@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerRespawner : MonoBehaviour {
+public class PlayerRespawner : MonoBehaviour
+{
 
     private Vector3 _startPosition;
     private Rigidbody2D _physicsBody;
     private float _initGravityScale;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         _startPosition = transform.position;
         _physicsBody = GetComponent<Rigidbody2D>();
         if (_physicsBody != null)
         {
             _initGravityScale = _physicsBody.gravityScale;
         }
-	}
-	
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Finish"))
