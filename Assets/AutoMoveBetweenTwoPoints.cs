@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class AutoMoveBetweenTwoPoints : MonoBehaviour
 {
 
@@ -15,6 +16,7 @@ public class AutoMoveBetweenTwoPoints : MonoBehaviour
     private bool initialMovement = true;
     private Vector3 _startPosition;
     private Vector2 _startPositionWithOffset;
+    private Rigidbody2D _physicsBody;
 
 
     void Start()
@@ -22,6 +24,8 @@ public class AutoMoveBetweenTwoPoints : MonoBehaviour
         _startPosition = transform.position;
         _startPositionWithOffset.x = _startPosition.x - leftmostPosition.x;
         _startPositionWithOffset.y = _startPosition.y - leftmostPosition.y;
+        _physicsBody = GetComponent<Rigidbody2D>();
+        _physicsBody.gravityScale = 0.0f;
     }
 
     void Update()
