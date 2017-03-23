@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     private const string _loseSceneName = "Lose";
     public int currentLevel;
     private int maxLevel = 6;
-    private float[] _levelDurations = new float[] { 10, 10, 15, 10, 20, 9999 }; // seconds
+    private float[] _levelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;
