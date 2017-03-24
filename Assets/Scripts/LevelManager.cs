@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     private const string _loseSceneName = "Lose";
     public int currentLevel;
-    private int maxLevel = 1;
+    private int maxLevel = 6;
     private float[] _levelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
     private Text _timerText;
     public bool isGamePaused = false;
@@ -45,7 +44,7 @@ public class LevelManager : MonoBehaviour
         {
             _audioSource = tmp.GetComponent<AudioSource>();
             _audioSource.volume = _audioSourceVolume;
-            if (EditorSceneManager.GetActiveScene().name.Contains("Level")) _audioSource.enabled = true;
+            if (SceneManager.GetActiveScene().name.Contains("Level")) _audioSource.enabled = true;
         }
     }
 
