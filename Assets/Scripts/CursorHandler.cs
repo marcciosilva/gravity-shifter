@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CursorHandler : MonoBehaviour
@@ -39,15 +42,24 @@ public class CursorHandler : MonoBehaviour
             switch (_currentPosition)
             {
                 case 0:
-                    SceneManager.LoadScene("Level-1");
+                    StartCoroutine(Fade());
+                    if (EditorSceneManager.GetActiveScene().name == "MainMenu") SceneManager.LoadScene("Tutorial");
+                    else SceneManager.LoadScene("Level-1");
                     break;
                 case 1:
+                    StartCoroutine(Fade());
                     Application.Quit();
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    IEnumerator Fade()
+    {
+        float fadeTime = GameObject.Find("_GM").GetComponent<Fading>().BeginFade(1);
+        yield return new WaitForSeconds(fadeTime);
     }
 
     private void updateCursor()
