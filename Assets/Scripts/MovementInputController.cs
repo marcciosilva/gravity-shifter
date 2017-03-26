@@ -20,6 +20,10 @@ public class MovementInputController : MonoBehaviour
     public bool onAir;
     private bool _shouldJump = false;
     private LevelManager _levelManager;
+    private AudioSource _jumpAudio;
+    private AudioSource _hitAudio;
+
+
 
     // Use this for initialization.
     void Start()
@@ -27,6 +31,12 @@ public class MovementInputController : MonoBehaviour
         _physicsBody = GetComponent<Rigidbody2D>();
         _physicsBody.freezeRotation = !rotationEnabled;
         _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        AudioSource[] _audioSources = GetComponents<AudioSource>();
+        if (_audioSources.Length >= 2) // Need jump and hit sound
+        {
+            _jumpAudio = _audioSources[0];
+            _hitAudio = _audioSources[1];
+        }
     }
 
     // Update is called once per frame.
@@ -53,6 +63,8 @@ public class MovementInputController : MonoBehaviour
             // Multiply by transform.localScale.y's sign to take into account jumping under
             // different gravity scales.
             _physicsBody.AddForce(Vector3.up * Mathf.Sign(this.transform.localScale.y) * jumpSpeed);
+            // Play jump sound.
+            _jumpAudio.Play();
             _shouldJump = false;
 #if (DEBUG)
             Debug.Log("Should not jump");
@@ -93,6 +105,8 @@ public class MovementInputController : MonoBehaviour
             this.enabled = false;
             _levelManager.isPlayerAlive = false;
             _levelManager.lostLevel();
+            // Play hit sound.
+            _hitAudio.Play();
         }
     }
 

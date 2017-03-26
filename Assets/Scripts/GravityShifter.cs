@@ -8,12 +8,18 @@ public class GravityShifter : MonoBehaviour
     public GameObject gravityParticleSystem;
     private GameObject _currentGravityParticleSystem;
     private LevelManager _levelManager;
+    private AudioSource _hitAudio;
 
     // Use this for initialization
     void Start()
     {
         _physicsBody = GetComponent<Rigidbody2D>();
         _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        AudioSource[] _audioSources = GetComponents<AudioSource>();
+        if (_audioSources.Length >= 3) // Need third audio source from player
+        {
+            _hitAudio = _audioSources[2];
+        }
     }
 
     // Update is called once per frame
@@ -26,6 +32,8 @@ public class GravityShifter : MonoBehaviour
             if (gravityParticleSystem != null)
                 _currentGravityParticleSystem = Instantiate(gravityParticleSystem, _physicsBody.transform.position, Quaternion.identity);
             Destroy(_currentGravityParticleSystem, 1);
+            // Play gravity shift sound.
+            _hitAudio.Play();
         }
     }
 
