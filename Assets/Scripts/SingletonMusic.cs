@@ -42,8 +42,6 @@ public class SingletonMusic : MonoBehaviour
         else potentiallyNewGameState = GameState.Menu;
 
         bool transitioning = instance == null || potentiallyNewGameState != instance.GetGameState();
-        if (transitioning) Debug.Log("Shit is transitioning nigga.");
-        else Debug.Log("NOT TRANSITIONING");
         if (!transitioning && instance != null && instance != this)
         {
             Destroy(this.gameObject);

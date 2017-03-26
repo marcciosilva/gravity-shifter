@@ -49,7 +49,7 @@ public class MovementInputController : MonoBehaviour
             {
                 _shouldJump = true;
 #if (DEBUG)
-                Debug.Log("Should jump");
+                //Debug.Log("Should jump");
 #endif
             }
 #endif
@@ -67,7 +67,7 @@ public class MovementInputController : MonoBehaviour
             _jumpAudio.Play();
             _shouldJump = false;
 #if (DEBUG)
-            Debug.Log("Should not jump");
+            //Debug.Log("Should not jump");
 #endif
         }
         if (horizontalMovementEnabled) CheckHorizontalMovement();
@@ -84,6 +84,7 @@ public class MovementInputController : MonoBehaviour
         {
             // TODO tidy this shit up, appears on two scripts.
             this.enabled = false;
+            Debug.Log("Calling reachedExit");
             _levelManager.reachedExit();
         }
     }

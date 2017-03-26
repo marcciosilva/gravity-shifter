@@ -8,15 +8,20 @@ public class LevelManager : MonoBehaviour
     private const string _loseSceneName = "Lose";
     public int currentLevel;
     private int maxLevel = 6;
-    private float[] _levelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
-    private int[] _maxInversionsPerLevel = new int[] { 0, 1, 5, 5, 3, 11 };
-    private int _inversionsLeft;
+    private float[] _currentLevelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
+    private float[] _maxLevelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
+    private float[] _perfectLevelDurations = new float[] { 6, 6, 15, 8, 13, 29 }; // seconds
+    private float[] _maxInversionsPerLevel = new float[] { 2, 3, 9, 9, 7, 15 };
+    private float[] _perfectInversionsPerLevel = new float[] { 0, 1, 5, 5, 2, 9 };
+    private float _inversionsLeft;
     private Text _inversionsText;
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;
     public bool isPlayerAlive = true;
     private MusicManager _musicManager;
+    private static float score = 0.0f;
+    private bool onExit = false;
 
     // Use this for initialization
     void Start()
@@ -87,9 +92,9 @@ public class LevelManager : MonoBehaviour
         if (!isGamePaused)
         {
             _inversionsText.text = _inversionsLeft + "/" + _maxInversionsPerLevel[currentLevel - 1];
-            _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_levelDurations[currentLevel - 1] / 60, (int)_levelDurations[currentLevel - 1] % 60);
-            _levelDurations[currentLevel - 1] -= Time.deltaTime;
-            if (_levelDurations[currentLevel - 1] <= 1) lostLevel();
+            _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_currentLevelDurations[currentLevel - 1] / 60, (int)_currentLevelDurations[currentLevel - 1] % 60);
+            _currentLevelDurations[currentLevel - 1] -= Time.deltaTime;
+            if (_currentLevelDurations[currentLevel - 1] <= 1) lostLevel();
         }
 
     }
@@ -97,21 +102,7 @@ public class LevelManager : MonoBehaviour
     IEnumerator LoadScene(string sceneName)
     {
         float fadeTime = GameObject.Find("_GM").GetComponent<Fading>().BeginFade(1);
-        //if (_audioSource != null && !sceneName.Contains("Level"))
-        //{
-        //    int i;
-        //    int fadePhases = 10;
-        //    for (i = fadePhases; i > 0; i--)
-        //    {
-        //        _audioSource.volume = i * 0.1f;
-        //        yield return new WaitForSeconds(fadeTime / fadePhases);
-        //    }
-        //    //Destroy(_audioSource);
-        //    _audioSource.enabled = false;
-        //} else
-        //{
         yield return new WaitForSeconds(fadeTime);
-        //}
         SceneManager.LoadScene(sceneName);
     }
 
@@ -122,19 +113,26 @@ public class LevelManager : MonoBehaviour
 
     public void reachedExit()
     {
-        Debug.Log("Current level is " + currentLevel);
-        int nextLevel = currentLevel + 1;
-        if (nextLevel <= maxLevel)
+        if (!onExit)
         {
-            Debug.Log("Loading level " + nextLevel);
-            StartCoroutine("LoadScene", "Level-" + nextLevel);
-            this.enabled = false;
-        }
-        else
-        {
-            // TODO implement win screen.
-            StartCoroutine("LoadScene", "MainMenu");
-            this.enabled = false;
+            onExit = true;
+            score += ((_maxLevelDurations[currentLevel - 1] - _currentLevelDurations[currentLevel - 1]) / _perfectLevelDurations[currentLevel - 1]) * 50
+                + (_inversionsLeft / (_maxInversionsPerLevel[currentLevel - 1] - _perfectInversionsPerLevel[currentLevel - 1])) * 50;
+            Debug.Log("Score: " + score);
+            //Debug.Log("Current level is " + currentLevel);
+            int nextLevel = currentLevel + 1;
+            if (nextLevel <= maxLevel)
+            {
+                //Debug.Log("Loading level " + nextLevel);
+                StartCoroutine("LoadScene", "Level-" + nextLevel);
+                this.enabled = false;
+            }
+            else
+            {
+                // TODO implement win screen.
+                StartCoroutine("LoadScene", "MainMenu");
+                this.enabled = false;
+            }
         }
     }
 
