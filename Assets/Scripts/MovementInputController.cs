@@ -82,10 +82,11 @@ public class MovementInputController : MonoBehaviour
         }
         else
         {
-            // TODO tidy this shit up, appears on two scripts.
             this.enabled = false;
             Debug.Log("Calling reachedExit");
             _levelManager.reachedExit();
+            // To avoid re-calling reachedExit on further contact with the collider.
+            collision.enabled = false;
         }
     }
 

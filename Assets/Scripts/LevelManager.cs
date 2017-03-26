@@ -20,8 +20,7 @@ public class LevelManager : MonoBehaviour
     private GameObject _canvasPaused;
     public bool isPlayerAlive = true;
     private MusicManager _musicManager;
-    private static float score = 0.0f;
-    private bool onExit = false;
+    private static float _score = 0.0f;
 
     // Use this for initialization
     void Start()
@@ -108,32 +107,72 @@ public class LevelManager : MonoBehaviour
 
     public void lostLevel()
     {
+        PlayerPrefs.SetInt("Latest score", (int)_score);
+        UpdateHighcores((int)_score);
         StartCoroutine("LoadScene", _loseSceneName);
     }
 
     public void reachedExit()
     {
-        if (!onExit)
+        _score += ((_maxLevelDurations[currentLevel - 1] - _currentLevelDurations[currentLevel - 1]) / _perfectLevelDurations[currentLevel - 1]) * 50
+            + (_inversionsLeft / (_maxInversionsPerLevel[currentLevel - 1] - _perfectInversionsPerLevel[currentLevel - 1])) * 50;
+        Debug.Log("Score: " + _score);
+        //Debug.Log("Current level is " + currentLevel);
+        int nextLevel = currentLevel + 1;
+        if (nextLevel <= maxLevel)
         {
-            onExit = true;
-            score += ((_maxLevelDurations[currentLevel - 1] - _currentLevelDurations[currentLevel - 1]) / _perfectLevelDurations[currentLevel - 1]) * 50
-                + (_inversionsLeft / (_maxInversionsPerLevel[currentLevel - 1] - _perfectInversionsPerLevel[currentLevel - 1])) * 50;
-            Debug.Log("Score: " + score);
-            //Debug.Log("Current level is " + currentLevel);
-            int nextLevel = currentLevel + 1;
-            if (nextLevel <= maxLevel)
+            //Debug.Log("Loading level " + nextLevel);
+            StartCoroutine("LoadScene", "Level-" + nextLevel);
+            this.enabled = false;
+        }
+        else
+        {
+            // TODO implement win screen.
+            PlayerPrefs.SetInt("Latest score", (int)_score);
+            UpdateHighcores((int) _score);
+            StartCoroutine("LoadScene", "MainMenu");
+            this.enabled = false;
+        }
+    }
+
+    private void UpdateHighcores(int score)
+    {
+        int[] scores = {
+            PlayerPrefs.GetInt("Firt score", 0),
+            PlayerPrefs.GetInt("Second score", 0),
+            PlayerPrefs.GetInt("Third score", 0),
+            PlayerPrefs.GetInt("Fourth score", 0),
+            PlayerPrefs.GetInt("Fifth score", 0)
+        };
+        for (int i = 0; i < scores.Length; i++)
+        {
+            if (score > scores[i])
             {
-                //Debug.Log("Loading level " + nextLevel);
-                StartCoroutine("LoadScene", "Level-" + nextLevel);
-                this.enabled = false;
-            }
-            else
-            {
-                // TODO implement win screen.
-                StartCoroutine("LoadScene", "MainMenu");
-                this.enabled = false;
+                switch(i)
+                {
+                    case 0:
+                        PlayerPrefs.SetInt("First score", score);
+                        break;
+                    case 1:
+                        PlayerPrefs.SetInt("Second score", score);
+                        break;
+                    case 2:
+                        PlayerPrefs.SetInt("Third score", score);
+                        break;
+                    case 3:
+                        PlayerPrefs.SetInt("Fourth score", score);
+                        break;
+                    case 4:
+                        PlayerPrefs.SetInt("Fifth score", score);
+                        break;
+                    default:
+                        break;
+                }
+                break;
             }
         }
     }
+
+
 
 }
