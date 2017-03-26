@@ -39,7 +39,8 @@ public class GravityShifter : MonoBehaviour
                 Destroy(_currentGravityParticleSystem, 1);
                 // Play gravity shift sound.
                 _gravityShiftAudio.Play();
-            } else
+            }
+            else
             {
                 _errorAudio.Play();
             }

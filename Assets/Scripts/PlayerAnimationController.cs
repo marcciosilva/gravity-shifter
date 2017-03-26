@@ -13,7 +13,6 @@ public class PlayerAnimationController : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     // TODO clean this shit up.
     private MovementInputController _inputController;
-    private int jumpState = Animator.StringToHash("Jumping");
     private LevelManager _levelManager;
 
     // Use this for initialization

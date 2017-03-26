@@ -12,18 +12,10 @@ public class MoveOnPath : MonoBehaviour
     private float reachDistance = 0.0f;
     public float rotationSpeed = 5.0f;
     public string pathName;
-    Vector3 lastPosition;
     Vector3 currentPosition;
     enum PathFollowingType { GoBackToBeginning, PingPong }
     private PathFollowingType pathFollowingType = PathFollowingType.PingPong;
     private bool goingForward = true;
-
-
-    // Use this for initialization
-    void Start()
-    {
-        lastPosition = transform.position;
-    }
 
     // Update is called once per frame
     void Update()

@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicManager : MonoBehaviour {
+public class MusicManager : MonoBehaviour
+{
 
     private List<AudioSource> _audioSources;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         _audioSources = new List<AudioSource>(FindObjectsOfType<AudioSource>());
-	}
+    }
 
     public void PauseAllAudio()
     {

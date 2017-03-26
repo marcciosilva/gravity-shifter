@@ -10,9 +10,6 @@ public class AutoMoveBetweenTwoPoints : MonoBehaviour
     public Vector3 endPosition;
     public float velocity;
     private bool movingToEnd = true;
-    private bool movingUpwards = true;
-    private Vector2 nullVector = new Vector2();
-
 
     void Start()
     {

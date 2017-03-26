@@ -36,7 +36,8 @@ public class Tutorial : MonoBehaviour
             StartCoroutine(EndTransmission());
             StartCoroutine(StartGame());
 
-        } else if (Input.GetButtonDown("Invert Gravity"))
+        }
+        else if (Input.GetButtonDown("Invert Gravity"))
         {
             StartCoroutine(StartGame());
         }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EditorPathScript : MonoBehaviour {
+public class EditorPathScript : MonoBehaviour
+{
     private const float wireSphereRadius = 0.3f;
     public Color rayColor = Color.white;
     public List<Transform> pathObjects = new List<Transform>();
@@ -26,10 +27,11 @@ public class EditorPathScript : MonoBehaviour {
             Vector3 current = pathObjects[i].position;
             if (i > 0)
             {
-                Vector3 previous = pathObjects[i-1].position;
+                Vector3 previous = pathObjects[i - 1].position;
                 Gizmos.DrawLine(previous, current);
                 Gizmos.DrawWireSphere(current, wireSphereRadius);
-            } else
+            }
+            else
             {
                 Gizmos.DrawWireSphere(current, wireSphereRadius);
             }

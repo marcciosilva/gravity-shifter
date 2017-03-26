@@ -23,7 +23,8 @@ public class InteractiveText : MonoBehaviour
         if (_busy)
         {
             return false;
-        } else
+        }
+        else
         {
             StartCoroutine(AnimateText(textToDisplay));
             _busy = true;

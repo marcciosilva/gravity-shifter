@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class MakePlayerStick : MonoBehaviour {
+public class MakePlayerStick : MonoBehaviour
+{
 
     private Rigidbody2D _physicsBody;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         _physicsBody = GetComponent<Rigidbody2D>();
         _physicsBody.gravityScale = 0.0f;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

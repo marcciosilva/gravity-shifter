@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
     public int currentLevel;
     private int maxLevel = 6;
     private float[] _levelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
-    private int[] _maxInversionsPerLevel = new int[] { 0, 1, 5, 5, 3, 11};
+    private int[] _maxInversionsPerLevel = new int[] { 0, 1, 5, 5, 3, 11 };
     private int _inversionsLeft;
     private Text _inversionsText;
     private Text _timerText;
@@ -110,7 +110,7 @@ public class LevelManager : MonoBehaviour
         //    _audioSource.enabled = false;
         //} else
         //{
-            yield return new WaitForSeconds(fadeTime);
+        yield return new WaitForSeconds(fadeTime);
         //}
         SceneManager.LoadScene(sceneName);
     }
