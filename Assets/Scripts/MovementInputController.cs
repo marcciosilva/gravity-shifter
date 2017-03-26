@@ -1,5 +1,5 @@
 ﻿#define JUMP_ENABLED
-#define DEBUG
+//#define DEBUG
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]

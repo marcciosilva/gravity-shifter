@@ -8,7 +8,8 @@ public class GravityShifter : MonoBehaviour
     public GameObject gravityParticleSystem;
     private GameObject _currentGravityParticleSystem;
     private LevelManager _levelManager;
-    private AudioSource _hitAudio;
+    private AudioSource _gravityShiftAudio;
+    private AudioSource _errorAudio;
 
     // Use this for initialization
     void Start()
@@ -16,9 +17,10 @@ public class GravityShifter : MonoBehaviour
         _physicsBody = GetComponent<Rigidbody2D>();
         _levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         AudioSource[] _audioSources = GetComponents<AudioSource>();
-        if (_audioSources.Length >= 3) // Need third audio source from player
+        if (_audioSources.Length >= 4) // Need third audio source from player
         {
-            _hitAudio = _audioSources[2];
+            _gravityShiftAudio = _audioSources[2];
+            _errorAudio = _audioSources[3];
         }
     }
 
@@ -27,13 +29,20 @@ public class GravityShifter : MonoBehaviour
     {
         if (!_levelManager.isGamePaused && Input.GetButtonDown("Invert Gravity"))
         {
-            // Invert game object's gravity scale.
-            _physicsBody.gravityScale *= -1.0f;
-            if (gravityParticleSystem != null)
-                _currentGravityParticleSystem = Instantiate(gravityParticleSystem, _physicsBody.transform.position, Quaternion.identity);
-            Destroy(_currentGravityParticleSystem, 1);
-            // Play gravity shift sound.
-            _hitAudio.Play();
+            bool success = _levelManager.UseGravityInversion();
+            if (success)
+            {
+                // Invert game object's gravity scale.
+                _physicsBody.gravityScale *= -1.0f;
+                if (gravityParticleSystem != null)
+                    _currentGravityParticleSystem = Instantiate(gravityParticleSystem, _physicsBody.transform.position, Quaternion.identity);
+                Destroy(_currentGravityParticleSystem, 1);
+                // Play gravity shift sound.
+                _gravityShiftAudio.Play();
+            } else
+            {
+                _errorAudio.Play();
+            }
         }
     }
 

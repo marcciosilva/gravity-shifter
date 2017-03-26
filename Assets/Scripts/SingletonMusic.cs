@@ -7,10 +7,8 @@ public class SingletonMusic : MonoBehaviour
 {
 
     private static SingletonMusic instance;
-    private enum GameState { Menu, InGame, Lose}
+    private enum GameState { Menu, InGame, Lose }
     private GameState _currentGameState = GameState.Menu;
-    private LevelManager _levelManager;
-    private AudioSource _audioSource;
 
     public static SingletonMusic GetInstance()
     {
@@ -30,27 +28,13 @@ public class SingletonMusic : MonoBehaviour
             instance._currentGameState = newGameState;
     }
 
-    private void Update()
+    public AudioSource GetAudioSource()
     {
-        bool validState = _audioSource != null && _levelManager != null;
-        if (validState) {
-            if (_levelManager.isGamePaused)
-            {
-                _audioSource.Pause();
-            } else
-            {
-                _audioSource.UnPause();
-            }
-        }
+        return GetComponent<AudioSource>();
     }
 
     void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
-        GameObject tmp = GameObject.Find("LevelManager");
-        if (tmp != null) _levelManager = tmp.GetComponent<LevelManager>();
-
-
         GameState potentiallyNewGameState;
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName.Contains("Lose")) potentiallyNewGameState = GameState.Lose;
