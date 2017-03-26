@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,7 +50,7 @@ public class InteractiveText : MonoBehaviour
         while (i < strComplete.Length)
         {
             _text.text += strComplete[i++];
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
         }
         _busy = false;
     }
