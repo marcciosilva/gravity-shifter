@@ -24,7 +24,6 @@ public class MusicManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Array size: " + _audioSources.Count);
     }
 
     public void ResumeAllAudio()
