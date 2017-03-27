@@ -143,7 +143,8 @@ public class LevelManager : MonoBehaviour
         if (!_reachedExit)
         {
             _reachedExit = true;
-            _score += ((_maxLevelDurations[currentLevel - 1] - _currentLevelDurations[currentLevel - 1]) / _perfectLevelDurations[currentLevel - 1]) * 50
+            _score += 
+                ((1.0f / (_maxLevelDurations[currentLevel - 1] - _currentLevelDurations[currentLevel - 1])) / (1.0f / _perfectLevelDurations[currentLevel - 1])) * 50
                 + (_inversionsLeft / (_maxInversionsPerLevel[currentLevel - 1] - _perfectInversionsPerLevel[currentLevel - 1])) * 50;
             Debug.Log("Score: " + _score);
             //Debug.Log("Current level is " + currentLevel);
