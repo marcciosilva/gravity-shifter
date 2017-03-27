@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     private float[] _perfectInversionsPerLevel = new float[] { 0, 1, 5, 5, 2, 9 };
     private float _inversionsLeft;
     private Text _inversionsText;
+    private Text _livesLeftText;
     private Text _timerText;
     public bool isGamePaused = false;
     private GameObject _canvasPaused;
@@ -23,10 +24,13 @@ public class LevelManager : MonoBehaviour
     private static float _score = 0.0f;
     private bool _reachedExit = false;
     private bool _lostLevel = false;
+    private static int _maxLives = 3;
+    private static int _currentLives = 3;
 
     // Use this for initialization
     void Start()
     {
+        Debug.Log("Lives: " + _currentLives);
         // Reset score.
         if (currentLevel == 1) _score = 0.0f;
         GameObject tmp = GameObject.Find("TextTimeLeft");
@@ -38,6 +42,11 @@ public class LevelManager : MonoBehaviour
         if (tmp != null)
         {
             _inversionsText = tmp.GetComponent<Text>();
+        }
+        tmp = GameObject.Find("TextLivesLeft");
+        if (tmp != null)
+        {
+            _livesLeftText = tmp.GetComponent<Text>();
         }
         else
         {
@@ -94,6 +103,7 @@ public class LevelManager : MonoBehaviour
 
         if (!isGamePaused)
         {
+            _livesLeftText.text = _currentLives + "/" + _maxLives;
             _inversionsText.text = _inversionsLeft + "/" + _maxInversionsPerLevel[currentLevel - 1];
             _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_currentLevelDurations[currentLevel - 1] / 60, (int)_currentLevelDurations[currentLevel - 1] % 60);
             _currentLevelDurations[currentLevel - 1] -= Time.deltaTime;
@@ -114,9 +124,17 @@ public class LevelManager : MonoBehaviour
         if (!_lostLevel)
         {
             _lostLevel = true;
-            PlayerPrefs.SetInt("Latest score", (int)_score);
-            UpdateHighscores((int)_score);
-            StartCoroutine("LoadScene", _loseSceneName);
+            _currentLives--;
+            if (_currentLives == 0)
+            {
+                PlayerPrefs.SetInt("Latest score", (int)_score);
+                UpdateHighscores((int)_score);
+                StartCoroutine(LoadScene(_loseSceneName));
+                _currentLives = _maxLives;
+            } else
+            {
+                StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
+            }
         }
     }
 
@@ -138,10 +156,10 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                // TODO implement win screen.
                 PlayerPrefs.SetInt("Latest score", (int)_score);
                 UpdateHighscores((int)_score);
-                StartCoroutine("LoadScene", "MainMenu");
+                StartCoroutine("LoadScene", "Win");
+                _currentLives = _maxLives;
                 this.enabled = false;
             }
         }
