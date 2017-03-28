@@ -8,11 +8,11 @@ public class LevelManager : MonoBehaviour
     private const string _loseSceneName = "Lose";
     public int currentLevel;
     private int maxLevel = 6;
-    private float[] _currentLevelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
-    private float[] _maxLevelDurations = new float[] { 10, 10, 15, 10, 15, 35 }; // seconds
-    private float[] _perfectLevelDurations = new float[] { 6, 6, 15, 8, 13, 29 }; // seconds
-    private float[] _maxInversionsPerLevel = new float[] { 2, 3, 9, 9, 7, 15 };
-    private float[] _perfectInversionsPerLevel = new float[] { 0, 1, 5, 5, 2, 9 };
+    private float[] _currentLevelDurations = new float[] { 10, 10, 10, 10, 15, 35 }; // seconds
+    private float[] _maxLevelDurations = new float[] { 10, 10, 10, 10, 15, 35 }; // seconds
+    private float[] _perfectLevelDurations = new float[] { 5.42f, 5.238f, 6.87f, 7.14f, 12.5f, 28.2f }; // seconds
+    private float[] _maxInversionsPerLevel = new float[] { 2, 3, 5, 9, 7, 15 };
+    private float[] _perfectInversionsPerLevel = new float[] { 0, 1, 1, 5, 2, 9 };
     private float _inversionsLeft;
     private Text _inversionsText;
     private Text _livesLeftText;
@@ -103,7 +103,8 @@ public class LevelManager : MonoBehaviour
 
         if (!isGamePaused)
         {
-            _livesLeftText.text = _currentLives + "/" + _maxLives;
+            // Patch for not showing life reset upon winning.
+            if (!_reachedExit) _livesLeftText.text = _currentLives + "/" + _maxLives;
             _inversionsText.text = _inversionsLeft + "/" + _maxInversionsPerLevel[currentLevel - 1];
             _timerText.text = "TIME LEFT - " + string.Format("{0}:{1:00}", (int)_currentLevelDurations[currentLevel - 1] / 60, (int)_currentLevelDurations[currentLevel - 1] % 60);
             _currentLevelDurations[currentLevel - 1] -= Time.deltaTime;
@@ -143,9 +144,14 @@ public class LevelManager : MonoBehaviour
         if (!_reachedExit)
         {
             _reachedExit = true;
+            float timeElapsedInLevel = _maxLevelDurations[currentLevel - 1] - _currentLevelDurations[currentLevel - 1];
+            Debug.Log("Time elapsed in level: " + timeElapsedInLevel);
+            // Max score for each level is 100.
+            // Score is multiplied by remaining lives once you win the game.
             _score += 
-                ((1.0f / (_maxLevelDurations[currentLevel - 1] - _currentLevelDurations[currentLevel - 1])) / (1.0f / _perfectLevelDurations[currentLevel - 1])) * 50
-                + (_inversionsLeft / (_maxInversionsPerLevel[currentLevel - 1] - _perfectInversionsPerLevel[currentLevel - 1])) * 50;
+                ((1.0f / timeElapsedInLevel) / (1.0f / _perfectLevelDurations[currentLevel - 1])) * 70
+                + (_inversionsLeft / (_maxInversionsPerLevel[currentLevel - 1] - _perfectInversionsPerLevel[currentLevel - 1])) * 30;
+            _score = Mathf.Ceil(_score);
             Debug.Log("Score: " + _score);
             //Debug.Log("Current level is " + currentLevel);
             int nextLevel = currentLevel + 1;
@@ -157,6 +163,8 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
+                _score *= _currentLives; // Maximum would be maxLevel * 100 * _currentLives.
+                // If I have 6 levels, the max score would be 1800.
                 PlayerPrefs.SetInt("Latest score", (int)_score);
                 UpdateHighscores((int)_score);
                 StartCoroutine("LoadScene", "Win");

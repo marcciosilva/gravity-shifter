@@ -16057,7 +16057,6 @@ GameObject:
   m_Component:
   - component: {fileID: 686690434}
   - component: {fileID: 686690436}
-  - component: {fileID: 686690435}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -16133,20 +16132,6 @@ Transform:
   m_Father: {fileID: 1277375491}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &686690435
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 686690433}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 2.918109, y: -3.5292482}
-  serializedVersion: 2
-  m_Size: {x: 0.12670851, y: 8.848684}
 --- !u!61 &686690436
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16158,9 +16143,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.009963989, y: 0.9394531}
+  m_Offset: {x: 0.009963989, y: 0.49153912}
   serializedVersion: 2
-  m_Size: {x: 5.9755464, y: 0.08651304}
+  m_Size: {x: 5.9755464, y: 0.9823408}
 --- !u!1001 &687228132
 Prefab:
   m_ObjectHideFlags: 0
@@ -24388,7 +24373,6 @@ GameObject:
   m_Component:
   - component: {fileID: 990337676}
   - component: {fileID: 990337675}
-  - component: {fileID: 990337677}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -24407,9 +24391,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0.009963989, y: 0.9394531}
+  m_Offset: {x: 0.009963989, y: 0.49943733}
   serializedVersion: 2
-  m_Size: {x: 5.9755464, y: 0.08651304}
+  m_Size: {x: 5.9755464, y: 0.9665463}
 --- !u!4 &990337676
 Transform:
   m_ObjectHideFlags: 0
@@ -24478,20 +24462,6 @@ Transform:
   m_Father: {fileID: 870456287}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &990337677
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 990337674}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 2.918109, y: -3.5292482}
-  serializedVersion: 2
-  m_Size: {x: 0.12670851, y: 8.848684}
 --- !u!1001 &990577814
 Prefab:
   m_ObjectHideFlags: 0

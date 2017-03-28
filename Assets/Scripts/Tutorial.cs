@@ -9,10 +9,12 @@ public class Tutorial : MonoBehaviour
 
     private int _currentMessage = 0;
     private string[] _messages = new string[] {
-        "You signed up for the gravity shifter test program of our organization",
-        "You will go through various test rooms, with the objective of getting to the exit under a time constraint",
-        "The amount of gravity inversions you might apply on yourself will be limited, as it's of extreme importance to use the equipment efficiently",
-        "You might try a room again upon failing, only three times during the whole program",
+        "You signed up for the gravity shifter test program of our organization.",
+        "You will go through various test rooms, with the objective of getting to the exit under a time constraint.",
+        "The amount of gravity inversions you might apply on yourself will be limited, as it's of extreme importance to use the equipment efficiently.",
+        "Please try to use the least amount of gravity inversions as you can, as this will be translated into a better score.",
+        "However, keep in mind that we will value speed over the unnecessary use of the gravity device.",
+        "You might try a room again upon failing, only three times during the whole program.",
         "Good luck, and may you join our forces in the future!" };
 
     void Start()

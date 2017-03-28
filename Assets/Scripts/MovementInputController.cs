@@ -79,6 +79,7 @@ public class MovementInputController : MonoBehaviour
         if (collision.name != "Exit door")
         {
             onAir = false;
+            Debug.Log("On floor");
         }
         else
         {
@@ -96,6 +97,7 @@ public class MovementInputController : MonoBehaviour
         if (collision.name != "Exit door")
         {
             onAir = true;
+            Debug.Log("On air");
         }
     }
 
