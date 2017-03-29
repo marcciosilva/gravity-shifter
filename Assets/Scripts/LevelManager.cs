@@ -7,12 +7,12 @@ public class LevelManager : MonoBehaviour
 {
     private const string _loseSceneName = "Lose";
     public int currentLevel;
-    private int maxLevel = 8;
-    private float[] _currentLevelDurations = new float[] { 10, 10, 15, 10, 15, 35, 30, 15 }; // seconds
-    private float[] _maxLevelDurations = new float[] { 10, 10, 15, 10, 15, 35, 30, 15 }; // seconds
-    private float[] _perfectLevelDurations = new float[] { 5.42f, 5.238f, 6.87f, 7.14f, 12.5f, 28.2f, 16.4f, 9.5f }; // seconds
-    private float[] _maxInversionsPerLevel = new float[] { 2, 3, 5, 9, 7, 15, 4, 20 };
-    private float[] _perfectInversionsPerLevel = new float[] { 0, 1, 1, 5, 2, 9, 2, 14 };
+    private int maxLevel = 10;
+    private float[] _currentLevelDurations = new float[] { 10, 10, 15, 10, 15, 35, 30, 15, 35, 30 }; // seconds
+    private float[] _maxLevelDurations = new float[] { 10, 10, 15, 10, 15, 35, 30, 15, 35, 30 }; // seconds
+    private float[] _perfectLevelDurations = new float[] { 5.42f, 5.238f, 6.87f, 7.14f, 12.5f, 28.2f, 16.4f, 9.5f, 24.1f, 20.6f }; // seconds
+    private float[] _maxInversionsPerLevel = new float[] { 2, 3, 5, 9, 7, 15, 4, 20, 6, 20 };
+    private float[] _perfectInversionsPerLevel = new float[] { 0, 1, 1, 5, 2, 9, 2, 14, 2, 14 };
     private float _inversionsLeft;
     private Text _inversionsText;
     private Text _livesLeftText;
@@ -117,6 +117,7 @@ public class LevelManager : MonoBehaviour
     {
         float fadeTime = GameObject.Find("_GM").GetComponent<Fading>().BeginFade(1);
         yield return new WaitForSeconds(fadeTime);
+        if (sceneName == _loseSceneName) _currentLives = _maxLives;
         SceneManager.LoadScene(sceneName);
     }
 
@@ -131,7 +132,6 @@ public class LevelManager : MonoBehaviour
                 PlayerPrefs.SetInt("Latest score", (int)_score);
                 UpdateHighscores((int)_score);
                 StartCoroutine(LoadScene(_loseSceneName));
-                _currentLives = _maxLives;
             } else
             {
                 StartCoroutine(LoadScene(SceneManager.GetActiveScene().name));
