@@ -22,6 +22,8 @@ public class MovementInputController : MonoBehaviour
     private LevelManager _levelManager;
     private AudioSource _jumpAudio;
     private AudioSource _hitAudio;
+    Collider2D[] _colliders;
+    private bool _reachedExit = false;
 
 
 
@@ -37,6 +39,7 @@ public class MovementInputController : MonoBehaviour
             _jumpAudio = _audioSources[0];
             _hitAudio = _audioSources[1];
         }
+        _colliders = GetComponents<Collider2D>();
     }
 
     // Update is called once per frame.
@@ -83,6 +86,7 @@ public class MovementInputController : MonoBehaviour
         }
         else
         {
+            _reachedExit = true;
             this.enabled = false;
             Debug.Log("Calling reachedExit");
             _levelManager.reachedExit();
@@ -104,7 +108,7 @@ public class MovementInputController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Deathzone")
+        if (!_reachedExit && collision.gameObject.tag == "Deathzone")
         {
             this.enabled = false;
             _levelManager.isPlayerAlive = false;
