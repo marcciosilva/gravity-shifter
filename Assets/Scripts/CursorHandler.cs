@@ -9,16 +9,21 @@ public class CursorHandler : MonoBehaviour
     private int _currentPosition = 0;
     private Vector3 _exitTextVertPosition; // Third coordinate is x-width of the text
     private Vector3 _startTextVertPosition; // Third coordinate is x-width of the text
-    private float _delayBetweenActions = 0.5f; // seconds
+    [Range(0.0f, 0.5f)]
+    public float _delayBetweenActions = 0.144f; // seconds
     private float _timeSinceLastAction; // seconds
     private Vector3 _secondOptionPosition; // Third coordinate is x-width of the text
     private string _sceneName;
-    public Vector2[] availableCursorPositions;
+    public RectTransform[] availableCursorPositions;
     public string[] sceneNames;
+    private RectTransform _cursorRecttransform;
+    private float _halfCursorWidth;
 
     // Use this for initialization
     void Start()
     {
+        _cursorRecttransform = GetComponent<RectTransform>();
+        _halfCursorWidth = (_cursorRecttransform.rect.width / 2.0f) * 1.5f;
         _sceneName = SceneManager.GetActiveScene().name;
     }
 
@@ -26,8 +31,8 @@ public class CursorHandler : MonoBehaviour
     void Update()
     {
         GetComponent<RectTransform>().anchoredPosition = new Vector3(
-            availableCursorPositions[_currentPosition].x,
-            availableCursorPositions[_currentPosition].y
+            availableCursorPositions[_currentPosition].anchoredPosition.x - availableCursorPositions[_currentPosition].rect.width / 2.0f - _halfCursorWidth,
+            availableCursorPositions[_currentPosition].anchoredPosition.y
         );
         updateCursor();
         checkSelection();
@@ -60,35 +65,59 @@ public class CursorHandler : MonoBehaviour
 
     private void updateCursor()
     {
-        _timeSinceLastAction += Time.deltaTime;
-        if (Input.GetAxis("Vertical") != 0 && (_timeSinceLastAction > _delayBetweenActions))
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (Input.GetAxis("Vertical") < -0.5f)
+            _currentPosition = (_currentPosition + 1) % availableCursorPositions.Length;
+        }
+        else if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            if (_currentPosition == 0)
             {
-                _timeSinceLastAction = 0;
-                _currentPosition = (_currentPosition + 1) % availableCursorPositions.Length;
+                _currentPosition = availableCursorPositions.Length - 1;
+            }
+            else
+            {
+                _currentPosition = (_currentPosition - 1) % availableCursorPositions.Length;
+            }
+            GetComponent<RectTransform>().anchoredPosition = new Vector3(
+                availableCursorPositions[_currentPosition].anchoredPosition.x - availableCursorPositions[_currentPosition].rect.width / 2.0f - _halfCursorWidth,
+                availableCursorPositions[_currentPosition].anchoredPosition.y
+            );
+        }
+        else // Joystick.
+        {
+            _timeSinceLastAction += Time.deltaTime;
+            if (Input.GetAxis("Vertical") != 0 && (_timeSinceLastAction > _delayBetweenActions))
+            {
+                if (Input.GetAxis("Vertical") < -0.5f)
+                {
+                    _timeSinceLastAction = 0;
+                    _currentPosition = (_currentPosition + 1) % availableCursorPositions.Length;
 
-            }
-            else if (Input.GetAxis("Vertical") > 0.5f)
-            {
-                _timeSinceLastAction = 0;
-                if (_currentPosition == 0)
-                {
-                    _currentPosition = availableCursorPositions.Length - 1;
                 }
-                else
+                else if (Input.GetAxis("Vertical") > 0.5f)
                 {
-                    _currentPosition = (_currentPosition - 1) % availableCursorPositions.Length;
+                    _timeSinceLastAction = 0;
+                    if (_currentPosition == 0)
+                    {
+                        _currentPosition = availableCursorPositions.Length - 1;
+                    }
+                    else
+                    {
+                        _currentPosition = (_currentPosition - 1) % availableCursorPositions.Length;
+                    }
                 }
-            }
-            if (_timeSinceLastAction == 0)
-            {
-                GetComponent<RectTransform>().anchoredPosition = new Vector3(
-                    availableCursorPositions[_currentPosition].x,
-                    availableCursorPositions[_currentPosition].y
-                );
+                if (_timeSinceLastAction == 0)
+                {
+                    GetComponent<RectTransform>().anchoredPosition = new Vector3(
+                        availableCursorPositions[_currentPosition].anchoredPosition.x - availableCursorPositions[_currentPosition].rect.width / 2.0f - _halfCursorWidth,
+                        availableCursorPositions[_currentPosition].anchoredPosition.y
+                    );
+                }
             }
         }
+
+
     }
 
 }

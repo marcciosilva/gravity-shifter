@@ -510,10 +510,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9177f069cbe6bc45bdb76c8a5dcd61b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _delayBetweenActions: 0.144
   availableCursorPositions:
-  - {x: -126.2, y: -45}
-  - {x: -177.8, y: -156.05}
-  - {x: -106.8, y: -245.6}
+  - {fileID: 1036384866}
+  - {fileID: 1783576675}
+  - {fileID: 1758136937}
   sceneNames:
   - Level-1
   - MainMenu
